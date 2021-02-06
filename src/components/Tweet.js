@@ -6,23 +6,22 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const [newTweet, setNewTweet] = useState(tweetObj.text);
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this tweet??")
-        console.log("ok")
         if (ok) {
             await dbService.doc(`tweets/${tweetObj.id}`).delete();
         }
     }
     const toggleEditing = () => setEditing((prev) => !prev);
-    const onSubmit= async (event)=>{
+    const onSubmit = async (event) => {
         event.preventDefault();
-        console.log(tweetObj,newTweet)
+        console.log(tweetObj, newTweet)
         await dbService.doc(`tweets/${tweetObj.id}`).update({
-            text:newTweet,
+            text: newTweet,
         }); setEditing(false);
     }
-    const onChange=(event)=>{
-        const{
-            target:{value},
-        }=event;
+    const onChange = (event) => {
+        const {
+            target: { value },
+        } = event;
         setNewTweet(value);
     }
     return (
@@ -30,16 +29,21 @@ const Tweet = ({ tweetObj, isOwner }) => {
             {
                 editing ? (
                     <>
-                    <form onSubmit={onSubmit}>
-                        <input onChange={onChange}
-                               type="text" 
-                               placeholder="edit your tweet" 
-                               value={newTweet.text} 
-                               required />
-                       <input type="submit" value="Update Tweet" />
-                    </form>
-                     <button onClick={toggleEditing}>Cancel</button>
-                   </>
+                        {isOwner && (
+                            <>
+                                <form onSubmit={onSubmit}>
+                                    <input onChange={onChange}
+                                        type="text"
+                                        placeholder="edit your tweet"
+                                        value={newTweet.text}
+                                        required />
+                                    <input type="submit" value="Update Tweet" />
+                                </form>
+                                <button onClick={toggleEditing}>Cancel</button>
+                            </>
+                        )}
+                    </>
+
                 ) : (
                         <>
                             <h4> {tweetObj.text}</h4>
