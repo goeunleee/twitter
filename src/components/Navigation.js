@@ -6,7 +6,7 @@ const Navigation = ({ userObj }) =>
 
     <ul>
         <li>
-            <Link to="/">home</Link>
+            <Link to="/">Home</Link>
         </li>
         <li>
             <Link to="/profile">{userObj.displayName}의 프로필</Link>

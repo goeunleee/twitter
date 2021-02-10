@@ -8,6 +8,7 @@ export default ({ userObj, refreshUser }) => {
     const onLogoutClick = () => {
         authService.signOut();
         history.push("/");
+
     };
     const getMyTweets = async () => {
         const tweets = await dbService
